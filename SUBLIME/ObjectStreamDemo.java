@@ -1,0 +1,46 @@
+import java.io.*;
+class ObjectStreamDemo{
+	public static void main(String[] args) throws Exception{
+		//writeObj();
+		readObj();
+	}
+	public static void writeObj() throws IOException{
+		ObjectOutputStream oos = 
+			new ObjectOutputStream(new FileOutputStream("C:\\Users\\Administrator\\Desktop\\HelloWord\\SUBLIME\\obj.txt"));
+		oos.writeObject(new Person("lisi",23,"kr"));
+		oos.close();
+	}
+	public static void readObj() throws Exception{
+	ObjectInputStream ois = 
+		new ObjectInputStream(new FileInputStream("C:\\Users\\Administrator\\Desktop\\HelloWord\\SUBLIME\\obj.txt"));
+	Person p = (Person)ois.readObject();
+	System.out.println(p);
+	ois.close();
+	}
+}
+//Serializable序列化接口
+//UID：序列号（根据类中成员算出来的）
+//
+class Person implements Serializable{
+	//给对象定义唯一的序列号；让已经序列化的对象能被新的类操作。
+	public static final long serialVersionUID = 42L;
+	String name;
+	static String country = "cn";
+	int age;
+	Person(String n, int a, String c){
+		this.name = n;
+		this.age = a;
+		this.country = c;
+	}
+	public String toString(){
+		 return name+": "+age+": "+country;
+	}
+}
+
+//但是当Person对象做出改变时，他的UID就会不一样，就会导致程序运行错误。
+//这时就要我们自己生成UID。
+
+//就算添加了country，因为它是静态的，不在堆里面，所以不能被序列化。
+//如果想对非静态成员也做非序列化操作，加上transient关键字修饰就可以了。
+//该关键字保证了被修饰对象只在堆中存在，在文本文件中不存在。
+//readObject()功能也很强大，可以自动一次读取不同的存入对象。
