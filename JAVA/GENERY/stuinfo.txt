@@ -1,0 +1,5 @@
+student[zhaoliu,89,98,99]	286
+student[lisi,233,45,5]	283
+student[xunba,34,56,66]	156
+student[zhangsan,23,5,56]	84
+student[wanwu,12,21,2]	35
